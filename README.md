@@ -1,1 +1,1 @@
-# bazy_danych_przestrzennych
+#
