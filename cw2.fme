@@ -9,10 +9,10 @@
 #              --data_poczatkowa ""
 #              --data_koncowa ""
 #              --SourceDataset_SHAPEFILE "C:\Users\natal\Downloads\BDP-CW_10_FME_Sentinel2\Powiaty\Powiaty.shp"
-#              --DestDataset_CSV2 "E:\Studia\Bazy_danych_przestrzennych\FME_2"
-#              --DestDataset_TIFF "E:\Studia\Bazy_danych_przestrzennych\FME_2"
+#              --DestDataset_CSV2 „C:\users\natal\Desktop\FME1”
+#              --DestDataset_TIFF „C:\users\natal\Desktop\FME1”
 #    
-FME_PYTHON_VERSION 37
+FME_PYTHON_VERSION 35
 GUI IGNORE SourceDataset_SHAPEFILE_1,SHAPEFILE_IN_READER_PARAMETERS_SHAPEFILE_1,SHAPEFILE_IN_ENCODING_SHAPEFILE_1,SHAPEFILE_IN_USE_SEARCH_ENVELOPE_SHAPEFILE_1,SHAPEFILE_IN_SEARCH_ENVELOPE_MINX_SHAPEFILE_1,SHAPEFILE_IN_SEARCH_ENVELOPE_MINY_SHAPEFILE_1,SHAPEFILE_IN_SEARCH_ENVELOPE_MAXX_SHAPEFILE_1,SHAPEFILE_IN_SEARCH_ENVELOPE_MAXY_SHAPEFILE_1,SHAPEFILE_IN_SEARCH_ENVELOPE_COORDINATE_SYSTEM_SHAPEFILE_1,SHAPEFILE_IN_CLIP_TO_ENVELOPE_SHAPEFILE_1,SHAPEFILE_IN_ADVANCED_SHAPEFILE_1,SHAPEFILE_IN_TRIM_PRECEDING_SPACES_SHAPEFILE_1,SHAPEFILE_IN_READ_BLANK_AS_SHAPEFILE_1,SHAPEFILE_IN_DONUT_DETECTION_SHAPEFILE_1,SHAPEFILE_IN_MEASURES_AS_Z_SHAPEFILE_1,SHAPEFILE_IN_REPORT_BAD_GEOMETRY_SHAPEFILE_1,SHAPEFILE_IN_NETWORK_AUTHENTICATION_SHAPEFILE_1,DestDataset_CSV2_1,CSV2_OUT_DATASET_GROUP_CSV2_1,CSV2_OUT_EXTENSION_CSV2_1,CSV2_OUT_FIELDS_GROUP_CSV2_1,CSV2_OUT_DELIMITER_CSV2_1,CSV2_OUT_ENCODING_GROUP_CSV2_1,CSV2_OUT_ENCODING_CSV2_1,CSV2_OUT_WRITE_BOM_FOR_UNICODE_CSV2_1,CSV2_OUT_ADVANCED_GROUP_CSV2_1,CSV2_OUT_QUALIFY_FIELD_NAMES_CSV2_1,CSV2_OUT_QUALIFY_FIELD_VALUES_CSV2_1,CSV2_OUT_UNQUALIFIED_FIELD_VALUE_HANDLING_CSV2_1,CSV2_OUT_FIELD_QUALIFIER_CHARACTER_CSV2_1,CSV2_OUT_FIELD_QUALIFIER_ESCAPE_CHARACTER_CSV2_1,CSV2_OUT_ROW_TERMINATION_CSV2_1,CSV2_OUT_WRITE_SCHEMA_FILE_CSV2_1,CSV2_OUT_EXISTING_SCHEMA_FILE_HANDLING_CSV2_1,DestDataset_TIFF_1
 DEFAULT_MACRO email_host 
 GUI TEXT email_host Adres e-mail:
@@ -30,9 +30,9 @@ DEFAULT_MACRO data_koncowa
 GUI OPTIONAL DATE data_koncowa "{}" Data końcowa:
 DEFAULT_MACRO SourceDataset_SHAPEFILE $(FME_MF_DIR)Powiaty\Powiaty.shp
 GUI MULTIFILE SourceDataset_SHAPEFILE Shapefiles(*.shp)|*.shp|Compressed_Shapefiles(*.shz)|*.shz|Compressed_Files(*.bz2;*.gz)|*.bz2;*.gz|Archive_Files(*.7z;*.7zip;*.rar;*.rvz;*.tar;*.tar.bz2;*.tar.gz;*.tgz;*.zip;*.zipx)|*.7z;*.7zip;*.rar;*.rvz;*.tar;*.tar.bz2;*.tar.gz;*.tgz;*.zip;*.zipx|All_Files(*)|* Source Esri Shapefile(s):
-DEFAULT_MACRO DestDataset_CSV2 E:\Studia\Bazy_danych_przestrzennych\FME_2
+DEFAULT_MACRO DestDataset_CSV2 C:\users\natal\Desktop\FME1
 GUI DIRNAME DestDataset_CSV2 Destination CSV (Comma Separated Value) Folder:
-DEFAULT_MACRO DestDataset_TIFF E:\Studia\Bazy_danych_przestrzennych\FME_2
+DEFAULT_MACRO DestDataset_TIFF C:\users\natal\Desktop\FME1
 GUI DIRNAME DestDataset_TIFF Destination TIFF (Tagged Image File Format) Folder:
 INCLUDE [ if {{$(email_host)} == {}} { puts_real {Parameter 'email_host' must be given a value.}; exit 1; }; ]
 INCLUDE [ if {{$(haslo)} == {}} { puts_real {Parameter 'haslo' must be given a value.}; exit 1; }; ]
@@ -65,9 +65,6 @@ GUI MULTIFILE SourceDataset_SHAPEFILE_1 Shapefiles(*.shp)|*.shp|Compressed_Shape
 DEFAULT_MACRO SHAPEFILE_IN_READER_PARAMETERS_SHAPEFILE_1 
 GUI OPTIONAL DISCLOSUREGROUP SHAPEFILE_IN_READER_PARAMETERS_SHAPEFILE_1 SHAPEFILE_IN_ENCODING_SHAPEFILE_1%SHAPEFILE_IN_NUMERIC_TYPE_ATTRIBUTE_HANDLING Reader Parameters
 # ============================================================================
-# The following keyword allows the user to choose what encoding to
-# use for reading the shapefile, overrides dbf file LDID or .cpg
-# file if present.
 DEFAULT_MACRO SHAPEFILE_IN_ENCODING_SHAPEFILE_1 fme-source-encoding
 SHAPEFILE_1_ENCODING "$(SHAPEFILE_IN_ENCODING_SHAPEFILE_1)"
 GUI STRING_OR_ENCODING SHAPEFILE_IN_ENCODING_SHAPEFILE_1 fme-source-encoding%UTF-8%ISO*%Big5%ibm*%Shift_JIS%GB2312%GBK%win*%KSC_5601%macintosh%x-mac* Character Encoding
@@ -268,7 +265,7 @@ SHAPEFILE_1_READER_META_ATTRIBUTES fme_feature_type
 
 MULTI_READER_CONTINUE_ON_READER_FAILURE No
 FME_BEGIN_PYTHON_ENC import<space>fme<lf>from<space>fmeobjects<space>import<space>*<lf>import<space>smtplib<space><lf>from<space>email.message<space>import<space>EmailMessage<space><lf>from<space>datetime<space>import<space>datetime<lf><lf>global<space>email<lf>email<space>=<space>fme.macroValues<openbracket><apos>email_host<apos><closebracket><lf>global<space>password<lf>password<space>=<space>fme.macroValues<openbracket><apos>haslo<apos><closebracket><lf>global<space>email_client<lf>email_client<space>=<space>fme.macroValues<openbracket><apos>email_klient<apos><closebracket><lf>global<space>county<lf>county<space>=<space>fme.macroValues<openbracket><apos>powiat<apos><closebracket><space><lf>global<space>now<lf>now<space>=<space>datetime.now<openparen><closeparen><lf>date<space>=<space>now.strftime<openparen><quote>%d<solidus>%m<solidus>%Y<space>%H:%M:%S<quote><closeparen><lf><lf>message<space>=<space>EmailMessage<openparen><closeparen><lf>message<openbracket><apos>Subject<apos><closebracket><space>=<space><apos>Dane<space>z<space>misji<space>ESA<space>Sentinel<space>2<space>dla<space>powiatu:<space><apos><space>+<space>county<space><lf>message<openbracket><apos>From<apos><closebracket><space>=<space>email<lf>message<openbracket><apos>To<apos><closebracket><space>=<space>email_client<lf><lf>message.set_content<openparen><apos>Drogi<space>u<u017c>ytkowniku<space><apos>+<space>email<space>+<space><apos><space><comma><space>wraz<space>z<space>dat<u0105><space><apos><space>+<space>date<space>+<space><apos><space>rozpocz<u0119>to<space>przetwarzanie<space>danych<space>dla<space>powiatu<space><apos>+<space>county<closeparen><lf>with<space>smtplib.SMTP_SSL<openparen><apos>smtp.gmail.com<apos><comma><space>465<closeparen><space>as<space>smtp:<lf><space><space><space><space>smtp.login<openparen>email<comma><space>password<closeparen><lf><space><space><space><space>smtp.send_message<openparen>message<closeparen><lf><space><space><space><space><lf>global<space>fmeErrors<lf>fmeErrors<space>=<openbracket><closebracket><lf><lf>def<space>ErrorsAppend<openparen>severity<comma>text<closeparen>:<lf><space><space><space><space>if<space>severity<space>in<openparen><space>FME_ERROR<comma><space>FME_FATAL<comma>FME_WARN<closeparen>:<lf><space><space><space><space><space><space><space><space>fmeErrors.append<openparen>text<closeparen><lf><space><space><space><space><space><space><space><space><lf>FMELogFile<openparen><closeparen>.setCallBack<openparen>ErrorsAppend<closeparen>
-FME_END_PYTHON_ENC import<space>fme<lf>from<space>fmeobjects<space>import<space>*<lf>import<space>json<lf>import<space>smtplib<space><lf>from<space>email.message<space>import<space>EmailMessage<space><lf>from<space>datetime<space>import<space>datetime<lf><lf><lf>start<space>=<space>fme.macroValues<openbracket><apos>data_poczatkowa<apos><closebracket><lf>end<space>=<space>fme.macroValues<openbracket><apos>data_koncowa<apos><closebracket><lf>clouds=<space>fme.macroValues<openbracket><apos>pokrycie_chmurami<apos><closebracket><lf><lf>now_2<space>=<space>datetime.now<openparen><closeparen><lf>exec_time<space>=<space>now_2<space>-<space>now<lf><lf>message<space>=<space>EmailMessage<openparen><closeparen><lf>message<openbracket><apos>Subject<apos><closebracket><space>=<space><apos>Proces<space>zako<u0144>czony<apos><space><lf>message<openbracket><apos>From<apos><closebracket><space>=<space>email<lf>message<openbracket><apos>To<apos><closebracket><space>=<space>email_client<lf><lf><lf>if<space>fme.status==0:<lf><space><space><space><space>message.set_content<openparen><apos>Proces<space>zosta<u0142><space>przerwany<space>ze<space>wzgl<u0119>du<space>na<space>brak<space>odpowiednich<space>zobrazowa<u0144><space>satelitarnych<space>spe<u0142>niaj<u0105>cych<space>kryteria:<space>powiat<space><apos><space>+<space>county<space>+<space><apos><comma><space>pokrycie<space>chmurami<space><space><apos>+<lf><space><space><space><space>clouds+<apos><comma><space>data<space>pocz<u0105>tkowa<space><apos>+<space>start<space>+<space><apos><comma><space>data<space>ko<u0144>cowa<space><apos>+<space>end<closeparen><lf><space><space><space><space><lf><space><space><space><space>with<space>open<openparen><quote>E:<backslash>Studia<backslash>Bazy_danych_przestrzennych<backslash>FME_2<backslash>log.json<quote><comma><apos>w<apos><closeparen><space>as<space>log:<lf><space><space><space><space><space><space><space><space>json.dump<openparen>fmeErrors<comma>log<closeparen><lf><space><space><space><space><space><space><space><lf><space><space><space><space>with<space>open<openparen><quote>E:<backslash>Studia<backslash>Bazy_danych_przestrzennych<backslash>FME_2<backslash>log.json<quote><comma><apos>rb<apos><closeparen><space>as<space>file:<lf><space><space><space><space><space><space><space><space>file_data<space>=<space>file.read<openparen><closeparen><lf><space><space><space><space><space><space><space><space>file_name<space>=<space><quote>logs.json<quote><lf><lf><space><space><space><space>message.add_attachment<openparen>file_data<comma><space>maintype=<apos>application<apos><comma><space>subtype=<apos>json<apos><comma><space>filename=file_name<closeparen><lf><space><space><space><space><lf>else:<lf><space><space><space><space>message.set_content<openparen><apos>Czas<space>trwania:<apos><space>+<space>str<openparen>exec_time<closeparen><closeparen><lf><space><space><space><space>with<space>open<openparen><quote>E:<backslash>Studia<backslash>Bazy_danych_przestrzennych<backslash>FME_2<backslash>statystyki.csv<quote><comma><apos>rb<apos><closeparen><space>as<space>file2:<lf><space><space><space><space><space><space><space><space>file2_data<space>=<space>file2.read<openparen><closeparen><lf><space><space><space><space><space><space><space><space>file2_name<space>=<space><quote>statystki.csv<quote><lf><lf><space><space><space><space>message.add_attachment<openparen>file2_data<comma><space>maintype=<apos>application<apos><comma><space>subtype=<apos>csv<apos><comma><space>filename=file2_name<closeparen><lf><lf><space><space><space><space>with<space>open<openparen><quote>E:<backslash>Studia<backslash>Bazy_danych_przestrzennych<backslash>FME_2<backslash>tiff.tif<quote><comma><apos>rb<apos><closeparen><space>as<space>file3:<lf><space><space><space><space><space><space><space><space>file3_data<space>=<space>file3.read<openparen><closeparen><lf><space><space><space><space><space><space><space><space>file3_name<space>=<space><quote>tiff.tif<quote><lf><lf><space><space><space><space>message.add_attachment<openparen>file3_data<comma><space>maintype=<apos>image<apos><comma><space>subtype=<apos>tif<apos><comma><space>filename=file3_name<closeparen><lf><lf><lf><lf>with<space>smtplib.SMTP_SSL<openparen><apos>smtp.gmail.com<apos><comma><space>465<closeparen><space>as<space>smtp:<lf><space><space><space><space>smtp.login<openparen>email<comma><space>password<closeparen><lf><space><space><space><space>smtp.send_message<openparen>message<closeparen>
+FME_END_PYTHON_ENC import<space>fme<lf>from<space>fmeobjects<space>import<space>*<lf>import<space>json<lf>import<space>smtplib<space><lf>from<space>email.message<space>import<space>EmailMessage<space><lf>from<space>datetime<space>import<space>datetime<lf><lf><lf>start<space>=<space>fme.macroValues<openbracket><apos>data_poczatkowa<apos><closebracket><lf>end<space>=<space>fme.macroValues<openbracket><apos>data_koncowa<apos><closebracket><lf>clouds=<space>fme.macroValues<openbracket><apos>pokrycie_chmurami<apos><closebracket><lf><lf>now_2<space>=<space>datetime.now<openparen><closeparen><lf>exec_time<space>=<space>now_2<space>-<space>now<lf><lf>message<space>=<space>EmailMessage<openparen><closeparen><lf>message<openbracket><apos>Subject<apos><closebracket><space>=<space><apos>Proces<space>zako<u0144>czony<apos><space><lf>message<openbracket><apos>From<apos><closebracket><space>=<space>email<lf>message<openbracket><apos>To<apos><closebracket><space>=<space>email_client<lf><lf><lf>if<space>fme.status==0:<lf><space><space><space><space>message.set_content<openparen><apos>Proces<space>zosta<u0142><space>przerwany<space>ze<space>wzgl<u0119>du<space>na<space>brak<space>odpowiednich<space>zobrazowa<u0144><space>satelitarnych<space>spe<u0142>niaj<u0105>cych<space>kryteria:<space>powiat<space><apos><space>+<space>county<space>+<space><apos><comma><space>pokrycie<space>chmurami<space><space><apos>+<lf><space><space><space><space>clouds+<apos><comma><space>data<space>pocz<u0105>tkowa<space><apos>+<space>start<space>+<space><apos><comma><space>data<space>ko<u0144>cowa<space><apos>+<space>end<closeparen><lf><space><space><space><space><lf><space><space><space><space>with<space>open<openparen><quote>E:<backslash>Desktop<backslash>Fme1<backslash>FME1<backslash>log.json<quote><comma><apos>w<apos><closeparen><space>as<space>log:<lf><space><space><space><space><space><space><space><space>json.dump<openparen>fmeErrors<comma>log<closeparen><lf><space><space><space><space><space><space><space><lf><space><space><space><space>with<space>open<openparen><quote>E:<backslash>Desktop<backslash>Fme1<backslash>FME1<backslash>log.json<quote><comma><apos>rb<apos><closeparen><space>as<space>file:<lf><space><space><space><space><space><space><space><space>file_data<space>=<space>file.read<openparen><closeparen><lf><space><space><space><space><space><space><space><space>file_name<space>=<space><quote>logs.json<quote><lf><lf><space><space><space><space>message.add_attachment<openparen>file_data<comma><space>maintype=<apos>application<apos><comma><space>subtype=<apos>json<apos><comma><space>filename=file_name<closeparen><lf><space><space><space><space><lf>else:<lf><space><space><space><space>message.set_content<openparen><apos>Czas<space>trwania:<apos><space>+<space>str<openparen>exec_time<closeparen><closeparen><lf><space><space><space><space>with<space>open<openparen><quote>E:<backslash>Desktop<backslash>Fme1<backslash>FME1<backslash>statystyki.csv<quote><comma><apos>rb<apos><closeparen><space>as<space>file2:<lf><space><space><space><space><space><space><space><space>file2_data<space>=<space>file2.read<openparen><closeparen><lf><space><space><space><space><space><space><space><space>file2_name<space>=<space><quote>statystki.csv<quote><lf><lf><space><space><space><space>message.add_attachment<openparen>file2_data<comma><space>maintype=<apos>application<apos><comma><space>subtype=<apos>csv<apos><comma><space>filename=file2_name<closeparen><lf><lf><space><space><space><space>with<space>open<openparen><quote>E:<backslash>Desktop<backslash>Fme1<backslash>FME1<backslash>tiff.tif<quote><comma><apos>rb<apos><closeparen><space>as<space>file3:<lf><space><space><space><space><space><space><space><space>file3_data<space>=<space>file3.read<openparen><closeparen><lf><space><space><space><space><space><space><space><space>file3_name<space>=<space><quote>tiff.tif<quote><lf><lf><space><space><space><space>message.add_attachment<openparen>file3_data<comma><space>maintype=<apos>image<apos><comma><space>subtype=<apos>tif<apos><comma><space>filename=file3_name<closeparen><lf><lf><lf><lf>with<space>smtplib.SMTP_SSL<openparen><apos>smtp.gmail.com<apos><comma><space>465<closeparen><space>as<space>smtp:<lf><space><space><space><space>smtp.login<openparen>email<comma><space>password<closeparen><lf><space><space><space><space>smtp.send_message<openparen>message<closeparen>
 
 # -------------------------------------------------------------------------
 
@@ -2461,7 +2458,6 @@ FACTORY_DEF * TeeFactory                                               \
    INPUT FEATURE_TYPE Clipper___ClipperMakeSureWeDontGetAllFeatures___ \
    OUTPUT FEATURE_TYPE Clipper___ClippersForSolidOrVector___           \
    OUTPUT FEATURE_TYPE Clipper___ClippersForRaster___
-
 FACTORY_DEF * TestFactory                                              \
    FACTORY_NAME Clipper_SolidClipperFilter                             \
    INPUT FEATURE_TYPE Clipper___ClippersForSolidOrVector___            \
@@ -2470,7 +2466,6 @@ FACTORY_DEF * TestFactory                                              \
    OUTPUT PASSED FEATURE_TYPE Clipper___ClippersForSolid___
 
 # The dummy input feature type Clipper___ClippeeMakeSureWeDontGetAllFeatures___
-
 # makes sure that if INPUT  FEATURE_TYPE Reprojector_REPROJECTED       \
  is emtpy, we don't get every feature
 
@@ -2502,7 +2497,6 @@ FACTORY_DEF {$(RASTER_CLIPPER_IN)} RasterClippingFactory               \
    OUTPUT CLIPPED_INSIDE FEATURE_TYPE Clipper_INSIDE                   \
        "_clipped" yes                                                  \
    OUTPUT EXTRA_CLIPPER FEATURE_TYPE Clipper__delete__ @Tcl2("FME_LogMessage fme_warn 917351 Clipper")
-
 FACTORY_DEF {*} ClippingFactory                                        \
    FACTORY_NAME Clipper_Vector                                         \
    INPUT CLIPPER FEATURE_TYPE Clipper___ClippersForVector___           \
@@ -2555,13 +2549,11 @@ FACTORY_DEF * TeeFactory                                               \
    FACTORY_NAME Clipper_Nuker                                          \
    INPUT FEATURE_TYPE Clipper__delete__                                \
       @Log("Offending feature was:")
-
 FACTORY_DEF * TeeFactory                                               \
   FACTORY_NAME "Clipper INSIDE Splitter"                               \
   INPUT FEATURE_TYPE Clipper_INSIDE                                    \
   OUTPUT FEATURE_TYPE Clipper_INSIDE_0_PMBiwD96aMs=                    \
   OUTPUT FEATURE_TYPE Clipper_INSIDE_1_WdTwwzY43qU=
-
 # -------------------------------------------------------------------------
 
 FACTORY_DEF * RasterStatisticsFactory                                  \
@@ -2570,7 +2562,6 @@ FACTORY_DEF * RasterStatisticsFactory                                  \
    RASTER_LEVEL BAND_ONLY                                              \
    RASTER_STATS 0   MEAN   STDEV                                       \
    OUTPUT OUTPUT FEATURE_TYPE RasterStatisticsCalculator_OUTPUT
-
 # -------------------------------------------------------------------------
 
 FACTORY_DEF * RoutingFactory FACTORY_NAME "Destination Feature Type Routing Correlator" \
@@ -2581,14 +2572,10 @@ FACTORY_DEF * RoutingFactory FACTORY_NAME "Destination Feature Type Routing Corr
   FEATURE_TYPE_ATTRIBUTE __wb_out_feat_type__                          \
   OUTPUT ROUTED FEATURE_TYPE *                                         \
   OUTPUT NOT_ROUTED FEATURE_TYPE __nuke_me__ @Tcl2("FME_StatMessage 818059 [FME_GetAttribute fme_template_feature_type] 818060 818061 fme_warn")
-
 # -------------------------------------------------------------------------
-
 FACTORY_DEF * TeeFactory                                               \
   FACTORY_NAME "Final Output Nuker"                                    \
   INPUT FEATURE_TYPE __nuke_me__
-
-
 # -------------------------------------------------------------------------
 CSV2_1_DEF StatisticOutput                                             \
   csv_existing_file_handling   Yes                                     \
@@ -2596,7 +2583,6 @@ CSV2_1_DEF StatisticOutput                                             \
   _clipped                     string                                  \
   band0.mean                   real64                                  \
   band0.stdev                  real64
-
 # -------------------------------------------------------------------------
 TIFF_1_DEF tiff                                                        \
   tiff_world_file_generation   yes                                     \
@@ -2614,4 +2600,3 @@ TIFF_1_DEF tiff                                                        \
   tiff_calculate_minmax_tifftags no                                    \
   tiff_generate_pyramids       NO                                      \
   _clipped                     char(200)
-
